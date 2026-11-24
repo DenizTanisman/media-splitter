@@ -1,41 +1,41 @@
 # Ses Bölücü
 
-Ses ya da video dosyasını tarayıcıda böl, parçalara ad ver, ayrı ayrı indir. Dosya cihazından çıkmaz.
+Split an audio or video file in the browser, name the parts and download them separately. The file never leaves your device. The interface is in Turkish.
 
-**Kullan:** https://deniztanisman.github.io/media-splitter/
+**Use it:** https://deniztanisman.github.io/media-splitter/
 
-![Ses Bölücü](screenshot.png)
+![Ses Bölücü (media splitter)](screenshot.png)
 
-## Neler yapar
+## What it does
 
-- **Yükle:** MP3, WAV, M4A, OGG, FLAC ya da MP4 / WEBM / MOV video. Videoda önizleme dalganın üstünde görünür.
-- **Parça seç:** dalga üzerinde basılı tutup sürükle ya da başlangıç / bitişi yaz (`1.23` = 1 dk 23 sn, `1:23.5` da olur).
-- **Ayarla:** kenarı sürüklerken o anki kare (video) ya da ses duyulur; bırakınca başlangıçtan 5 sn, bitişin son 5 sn'si çalar.
-- **Dinle:** Çal, içinde bulunduğun parçanın sonunda durur ve "devam edeyim mi?" diye sorar. Devam edersen parçanın sonu oynatmayla birlikte uzar, durdurduğun yerde biter.
-- **Çıkar:** bir kısmı kullanıma kapat; dalgada gri görünür, çalarken atlanır. "Kesilmiş hâlini indir" o kısımlar olmadan dosyanın tamamını verir.
-- **Birleştir:** parçaları istediğin sırayla tek dosyada birleştir.
-- **Geri al:** her değişiklik (Cmd/Ctrl+Z).
-- **İndir:** MP3 (192 kbps), WAV ya da video (WebM). Her parça kendi adıyla bir `.zip` içinde iner.
-- **Metin:** indirirken "yazılı halini de" seçersen (toplu indirmede dosya dosya seçilir) Mac'teki yardımcı konuşmayı yazıya çevirip aynı isimle `.txt` ekler.
+- **Load:** MP3, WAV, M4A, OGG, FLAC, or MP4 / WEBM / MOV video. For video, a preview appears above the waveform.
+- **Select a part:** press and drag on the waveform, or type the start / end (`1.23` = 1 min 23 s; `1:23.5` works too).
+- **Adjust:** while dragging an edge you see the current frame (video) or hear the audio; on release it plays the first 5 s from the start, or the last 5 s before the end.
+- **Listen:** "Çal" (play) stops at the end of the part you are in and asks whether to continue. If you continue, the part's end extends along with playback and ends where you stop.
+- **Exclude:** take a section out of use; it shows grey on the waveform and is skipped during playback. "Kesilmiş hâlini indir" (download the cut version) gives the whole file without those sections.
+- **Join:** merge parts into a single file in any order.
+- **Undo:** every change (Cmd/Ctrl+Z).
+- **Download:** MP3 (192 kbps), WAV or video (WebM). Each part comes with its own name inside a `.zip`.
+- **Text:** if you also choose the written version when downloading (picked file by file in a bulk download), the Mac helper transcribes the speech and adds a `.txt` with the same name.
 
-Video parçaları tarayıcıda oynatılarak kaydedilir: parçanın süresi kadar sürer, kayıt bitene kadar sekmeyi önde tut. Safari / iPhone video kesemez (sesini MP3 olarak alabilirsin); Chrome ya da Edge kullan.
+Video parts are recorded by playing them in the browser: it takes as long as the part lasts, so keep the tab in front until recording finishes. Safari / iPhone can't cut video (you can still get its audio as MP3); use Chrome or Edge.
 
-## Mac yardımcısı (isteğe bağlı)
+## Mac helper (optional)
 
-İndirilenler'e düşen Ses Bölücü zip'lerini açar, zip'i siler; istenen dosyalar için Whisper ile (bu Mac'te, internetsiz) `.txt` metin üretir. Türkçe dahil çok dili tanır.
+Unpacks Ses Bölücü zips that land in Downloads and deletes the zip; for the requested files it produces `.txt` text with Whisper (on this Mac, offline). It recognises many languages, Turkish included.
 
 ```sh
 cd helper && ./install.sh
 ```
 
-Gerekenler: Apple Silicon Mac, `ffmpeg` (`brew install ffmpeg`), Python 3 (tercihen `uv`). Whisper modeli ilk kullanımda bir kez iner (~1,5 GB).
+Requirements: Apple Silicon Mac, `ffmpeg` (`brew install ffmpeg`), Python 3 (preferably `uv`). The Whisper model downloads once on first use (~1.5 GB).
 
-- `helper/ses-bolucu-unzip.sh` — zip açma + metin. Sadece açıklamasında `ses-bolucu` yazan zip'lere dokunur.
-- `helper/folder-action.applescript` — İndirilenler klasör eylemi.
-- `helper/install.sh` — üçünü kurar.
+- `helper/ses-bolucu-unzip.sh` — unzip + text. Only touches zips whose comment says `ses-bolucu`.
+- `helper/folder-action.applescript` — Downloads folder action.
+- `helper/install.sh` — installs all three.
 
-Kaldırmak için: Finder › İndirilenler › sağ tık › Hızlı İşlemler › Klasör Eylemleri Ayarları › `ses-bolucu-unzip.scpt` işaretini kaldır.
+To remove it: Finder › Downloads › right-click › Quick Actions › Folder Actions Setup › untick `ses-bolucu-unzip.scpt`.
 
-## Teknik
+## Technical
 
-Tek dosya: `index.html` (kurulum yok). MP3 için [lamejs](https://github.com/zhuker/lamejs), zip için [JSZip](https://stuk.github.io/jszip/), WebM süresi için [fix-webm-duration](https://github.com/yusitnikov/fix-webm-duration) CDN'den yüklenir.
+A single file: `index.html` (no install). [lamejs](https://github.com/zhuker/lamejs) for MP3, [JSZip](https://stuk.github.io/jszip/) for zip and [fix-webm-duration](https://github.com/yusitnikov/fix-webm-duration) for WebM duration are loaded from a CDN.
